@@ -1,0 +1,23 @@
+{
+  "name": "contoso-bank",
+  "version": "1.0.0",
+  "description": "Banking Bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/disha93/contoso-bank-bot.git"
+  },
+  "author": "Shomal Dass",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/disha93/contoso-bank-bot/issues"
+  },
+  "homepage": "https://github.com/disha93/contoso-bank-bot#readme",
+  "dependencies": {
+    "botbuilder": "^3.12.0",
+    "restify": "^6.3.4"
+  }
+}
