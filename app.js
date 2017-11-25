@@ -21,6 +21,7 @@ server.post('/api/messages', connector.listen());
 
 // Receive messages from the user and respond to each message appropriately.
 var bot = new botBuilder.UniversalBot(connector, function (session) {
-    session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
+    session.send("Hi user, Welcome to the Foodbot");
+    //session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
 });
-luis.startDialog(bot);
+//luis.startDialog(bot);
