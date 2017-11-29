@@ -1,6 +1,7 @@
 var builder = require('botbuilder');
 var account = require("./AccountDetails");
 var exchange = require("./ExchangeRate");
+var QnA = require("./QnAMaker");
 
 exports.startDialog = function (bot) {
     
@@ -148,7 +149,7 @@ exports.startDialog = function (bot) {
 
 
     bot.dialog('QnA', [function (session, args) {
-            qna.talkToQnA(session, results.response);
+            QnA.talkToQnA(session, results.response);
         }
     ]).triggerAction({
         matches: 'QnA'
