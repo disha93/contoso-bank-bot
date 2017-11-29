@@ -12,7 +12,7 @@ exports.startDialog = function (bot) {
     //Welcome by bot
     bot.dialog('WelcomeIntent', function (session, args){
         // Insert logic here later
-        session.send("Hi, I'm ContosoBot. If you need assistance, you can ask me a question, however if you would like to speak to one of our representatives over the phone, please press the botton TALK TO HUMAN below.");
+        session.send("Hi, I'm ContosoBot. If you need assistance, you can ask me a question, you can choose from \n\n1. get account\n\n2. get contact\n\n3. my contact number is 02xxxxxxxxx\n\n 4. delete 021xxxxxxxx");
         //please enter your contact number and a Contoso Bank representaive will contact you shortly. 
      }).triggerAction({
          matches: 'WelcomeIntent'
