@@ -12,7 +12,7 @@ exports.startDialog = function (bot) {
     //Welcome by bot
     bot.dialog('WelcomeIntent', function (session, args){
         // Insert logic here later
-        session.send("Hi, I'm ContosoBot. If you need assistance, you can ask me a question, you can choose from \n\n1. get account\n\n2. get contact\n\n3. my contact number is 02xxxxxxxxx\n\n 4. delete 021xxxxxxxx");
+        session.send("Hi, I'm ContosoBot. If you need assistance, you can ask me a question, you can choose from \n\n1. get account\n\n2. get contact\n\n3. my contact number is 02xxxxxxxxx\n\n 4. delete 021xxxxxxxx\n\n5. quit");
         //please enter your contact number and a Contoso Bank representaive will contact you shortly. 
      }).triggerAction({
          matches: 'WelcomeIntent'
@@ -152,6 +152,14 @@ exports.startDialog = function (bot) {
         }
     ]).triggerAction({
         matches: 'QnA'
+    });
+
+    bot.dialog('quit', [function (session, args) {
+        session.send(`It was nice chatting to you. Bye`);
+        session.endDialog();
+    }
+    ]).triggerAction({
+        matches: 'quit'
     });
 
 
