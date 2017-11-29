@@ -58,7 +58,7 @@ exports.startDialog = function (bot) {
                 }
 
                 session.send("Retrieving your contact details...");
-                displayAccountDetails.displayContactDetails(session, session.conversationData["fullName"]);  // <---- THIS LINE HERE IS WHAT WE NEED 
+                account.displayContactDetails(session, session.conversationData["fullName"]);  // <---- THIS LINE HERE IS WHAT WE NEED 
             //}
         }
     ]).triggerAction({
@@ -99,7 +99,7 @@ exports.startDialog = function (bot) {
     });
 
 
-    bot.dialog('DeleteContact', [
+    bot.dialog('deleteContact', [
         function (session, args, next) {
             session.dialogData.args = args || {};
             if (!session.conversationData["fullName"]) {
@@ -114,6 +114,7 @@ exports.startDialog = function (bot) {
             session.send("You want to delete one of your contact numbers.");
 
             // Pulls out the food entity from the session if it exists
+           
             var contactEntity = builder.EntityRecognizer.findEntity(session.dialogData.args.intent.entities, 'contact');
 
             // Checks if the for entity was found
@@ -126,7 +127,7 @@ exports.startDialog = function (bot) {
         //}
     }
     ]).triggerAction({
-    matches: 'DeleteContact'
+    matches: 'deleteContact'
     });
 
 

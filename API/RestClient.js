@@ -48,7 +48,7 @@ exports.postContactDetails = function getData(url, fullName, contactNumber){
 };
 
 
-exports.deleteContact = function deleteData(url,session, fullName ,contactNumber, id, callback){
+exports.deleteContactDetails = function deleteData(url,session, fullName ,contactNumber, id, callback){
     var options = {
         url: url + "\\" + id,
         method: 'DELETE',
@@ -61,7 +61,7 @@ exports.deleteContact = function deleteData(url,session, fullName ,contactNumber
     request(options,function (err, res, body){
         if( !err && res.statusCode === 200){
             console.log(body);
-            callback(body,session,username, favouriteFood);
+            callback(body,session,fullName, contactNumber);
         }else {
             console.log(err);
             console.log(res);

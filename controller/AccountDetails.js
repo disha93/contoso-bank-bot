@@ -15,9 +15,7 @@ function handleAccountDetailsResponse(message, session, fullName) {
         var accountType = accountDetailResponse[index].accountType;
         var accountNumber = accountDetailResponse[index].accountNumber;
         //session.send(customerNumber);
-        //Convert to lower case whilst doing comparison to ensure the user can type whatever they like
         if (fullName.toLowerCase() === fullnameReceived.toLowerCase()) {
-            //Add a comma after all favourite foods unless last one
             if(accountDetailResponse.length - 1) {
                 allDetails.push('Customer Name: '+ customerNumber + '\n\nAccount Number: ' + accountNumber);
             }
@@ -27,7 +25,6 @@ function handleAccountDetailsResponse(message, session, fullName) {
         }        
     }
     
-    // Print all favourite foods for the user that is currently logged in
     session.send("%s, your account details are: \n\n  %s \r\n", fullName, allDetails);                
     
 }
@@ -46,19 +43,16 @@ function handleContactDetailsResponse(message, session, fullName) {
         var fullNameReceived = contactDetailsResponse[index].fullName;
         var contactNumber = contactDetailsResponse[index].contactNumber;
 
-        //Convert to lower case whilst doing comparison to ensure the user can type whatever they like
         if (fullName.toLowerCase() === fullNameReceived.toLowerCase()) {
-            //Add a comma after all favourite foods unless last one
             if(contactDetailsResponse.length - 1) {
                 allDetails.push(contactNumber);
             }
             else {
-                allDetails.push(contactNumber + ', ');
+                allDetails.push(contactNumber + '\n\n');
             }
         }        
     }
     
-    // Print all favourite foods for the user that is currently logged in
     session.send("%s, your contact details are: %s", fullName, allDetails);                
     
 }
@@ -82,7 +76,7 @@ exports.deleteContactDetails = function deleteContactDetails(session,fullName,co
 
                 console.log(allDetails[i]);
 
-                rest.deleteContactDetails(url,session,fullName,contactNumber, allDetails[i].id ,handleDeletedFoodResponse)
+                rest.deleteContactDetails(url,session,fullName,contactNumber, allDetails[i].id ,handleDeletedContactResponse)
 
             }
         }
@@ -94,8 +88,25 @@ exports.deleteContactDetails = function deleteContactDetails(session,fullName,co
 };
 
 
-function handleDeletedContactDetails (body, session, fullName, contactNumber) {
+function handleDeletedContactResponse (message, session, fullName, contactNumber) {
+    //var deletedContactResponse = JSON.parse(message);
+    //var allDetails = contactNumber;
+   /*  for (var index in deletedContactResponse) {
+        //var fullNameReceived = deletedContactResponse[index].fullName;
+        //var contactNumber = deletedContactResponse[index].contactNumber;
+        allDetails.push(contactNumber);
+        console.log(contactNumber + "jkffffffffffffffffffffffffffff");
+        /* if (fullName.toLowerCase() === fullNameReceived.toLowerCase()) {
+            if(deletedContactResponse.length - 1) {
+                allDetails.push(contactNumber);
+            }
+            else {
+                allDetails.push(contactNumber + '\n\n');
+            }
+        } */        
+   // } 
     
+    session.send("%s, The contact number %s has been successfully deleted from your account", fullName, contactNumber); 
             console.log('Done');
     
     }
