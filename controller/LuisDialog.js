@@ -147,4 +147,12 @@ exports.startDialog = function (bot) {
     }); 
 
 
+    bot.dialog('QnA', [function (session, args) {
+            qna.talkToQnA(session, results.response);
+        }
+    ]).triggerAction({
+        matches: 'QnA'
+    });
+
+
 }
