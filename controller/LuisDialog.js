@@ -1,6 +1,6 @@
 var builder = require('botbuilder');
 var account = require("./AccountDetails");
-
+var exchange = require("./ExchangeRate");
 
 exports.startDialog = function (bot) {
     
@@ -128,5 +128,22 @@ exports.startDialog = function (bot) {
     ]).triggerAction({
     matches: 'DeleteContact'
     });
+
+
+    bot.dialog('getExchangeRates', [function (session, args) {
+        var currencyEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'currency');
+        //console.log(currencyEntity + "+++++++++++++++++++++++++++++++++++=");
+        if (currencyEntity) {
+            session.send('Calculating exchange rate for %s...' , currencyEntity.entity);
+            exchange.displayExchange(session, currencyEntity.entity );
+        } else {
+            session.send("Currency could not be identified! Please try again");
+        }
+    }
+
+    ]).triggerAction({
+        matches: 'getExchangeRates'
+    }); 
+
 
 }

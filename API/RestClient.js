@@ -69,3 +69,14 @@ exports.deleteContact = function deleteData(url,session, fullName ,contactNumber
     })
 
 };
+
+
+exports.getExchangeRateData = function getData(url, session, currency, callback){
+    request.get(url, function(err,res,body){
+        if(err){
+            console.log(err);
+        }else {
+            callback(body, session, currency);
+        }
+    });
+};
