@@ -1,4 +1,5 @@
 var builder = require('botbuilder');
+var account = require("./AccountDetails");
 
 
 exports.startDialog = function (bot) {
@@ -17,7 +18,115 @@ exports.startDialog = function (bot) {
          matches: 'WelcomeIntent'
      });
 
-    
+     bot.dialog('getAccount', [
+        function (session, args, next) {
+            session.dialogData.args = args || {};        
+            if (!session.conversationData["fullName"]) {
+                builder.Prompts.text(session, "Enter your full name to retrieve your account:");                
+            } else {
+                next(); // Skip if we already have this info.
+            }
+        },
+        function (session, results, next) {
+            //if (!isAttachment(session)) {
+                if (results.response) {
+                    session.conversationData["fullName"] = results.response;
+                }
+                session.send("Retrieving your account details...");
+                account.displayAccountDetails(session, session.conversationData["fullName"]);  // <---- THIS LINE HERE IS WHAT WE NEED 
+           // }
+        }
+    ]).triggerAction({
+        matches: 'getAccount'
+    });
 
+
+    bot.dialog('getContact', [
+        function (session, args, next) {
+            session.dialogData.args = args || {};        
+            if (!session.conversationData["fullName"]) {
+                builder.Prompts.text(session, "Enter your full name to retrieve your account:");                
+            } else {
+                next(); // Skip if we already have this info.
+            }
+        },
+        function (session, results, next) {
+            //if (!isAttachment(session)) {
+
+                if (results.response) {
+                    session.conversationData["fullName"] = results.response;
+                }
+
+                session.send("Retrieving your contact details...");
+                displayAccountDetails.displayContactDetails(session, session.conversationData["fullName"]);  // <---- THIS LINE HERE IS WHAT WE NEED 
+            //}
+        }
+    ]).triggerAction({
+        matches: 'getContact'
+    });
+
+
+    bot.dialog('addContact', [
+        function (session, args, next) {
+            session.dialogData.args = args || {};        
+            if (!session.conversationData["fullName"]) {
+                builder.Prompts.text(session, "Enter your full name to retrieve your account:");                
+            } else {
+                next(); // Skip if we already have this info.
+            }
+        },
+        function (session, results, next) {
+            //if (!isAttachment(session)) {
+
+                if (results.response) {
+                    session.conversationData["fullName"] = results.response;
+                }
+                // Pulls out the food entity from the session if it exists
+                var contactEntity = builder.EntityRecognizer.findEntity(session.dialogData.args.intent.entities, 'contact');
+    
+                // Checks if the food entity was found
+                if (contactEntity) {
+                    session.send('Thanks for adding \'%s\' as your contact number', contactEntity.entity);
+                    account.sendContactDetails(session, session.conversationData["fullName"], contactEntity.entity); // <-- LINE WE WANT
+    
+                } else {
+                    session.send("This is not a valid contact number");
+                }
+           // }
+        }
+    ]).triggerAction({
+        matches: 'addContact'
+    });
+
+
+    bot.dialog('DeleteContact', [
+        function (session, args, next) {
+            session.dialogData.args = args || {};
+            if (!session.conversationData["fullName"]) {
+                builder.Prompts.text(session, "Enter your full name to retrieve your account:");
+            } else {
+                next(); // Skip if we already have this info.
+            }
+        },
+        function (session, results,next) {
+        //if (!isAttachment(session)) {
+
+            session.send("You want to delete one of your contact numbers.");
+
+            // Pulls out the food entity from the session if it exists
+            var contactEntity = builder.EntityRecognizer.findEntity(session.dialogData.args.intent.entities, 'contact');
+
+            // Checks if the for entity was found
+            if (contactEntity) {
+                session.send('Deleting \'%s\'...', contactEntity.entity);
+                account.deleteContactDetails(session,session.conversationData['fullName'],contactEntity.entity); //<--- CALLL WE WANT
+            } else {
+                session.send("No contact number identified! Please try again");
+            }
+        //}
+    }
+    ]).triggerAction({
+    matches: 'DeleteContact'
+    });
 
 }
